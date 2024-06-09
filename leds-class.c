@@ -9,11 +9,6 @@
 #include <linux/workqueue.h> //for work_struct
 #include <linux/leds.h> //for led
 
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Amitesh Singh");
-MODULE_DESCRIPTION("Avr/stm32 led driver"); //sysfs
-MODULE_VERSION("0.1"); //
-
 //one structure for each connected device
 struct my_usb
 {
@@ -124,7 +119,7 @@ static void presend(struct my_usb *data) {
 
 //blue  first XX
 static void
-usb_avr_led_set(struct led_classdev *led,
+usb_blue_set(struct led_classdev *led,
                 enum led_brightness brightness)
 {
    struct my_usb *data = container_of(led, struct my_usb, led);
@@ -140,7 +135,7 @@ usb_avr_led_set(struct led_classdev *led,
 
 //red 2nd xx
 static void
-usb_avr_led2_set(struct led_classdev *led2,
+usb_red_set(struct led_classdev *led2,
                 enum led_brightness brightness)
 {
    struct my_usb *data = container_of(led2, struct my_usb, led2);
@@ -156,7 +151,7 @@ usb_avr_led2_set(struct led_classdev *led2,
 
 //green 3rd xx
 static void
-usb_avr_led3_set(struct led_classdev *led3,
+usb_green_set(struct led_classdev *led3,
                 enum led_brightness brightness)
 {
    struct my_usb *data = container_of(led3, struct my_usb, led3);
@@ -254,21 +249,21 @@ my_usb_probe(struct usb_interface *interface,
    data->led.name = kasprintf(GFP_KERNEL, "%s-%s:w:gpd-red",
                               dev_driver_string(&data->udev->dev),
                               dev_name(&data->udev->dev));
-   data->led.brightness_set = usb_avr_led_set;
+   data->led.brightness_set = usb_blue_set;
    data->led.brightness = 0;
    data->led.max_brightness = 255;
 
    data->led2.name = kasprintf(GFP_KERNEL, "%s-%s:w:gpd-green",
                               dev_driver_string(&data->udev->dev),
                               dev_name(&data->udev->dev));
-   data->led2.brightness_set = usb_avr_led2_set;
+   data->led2.brightness_set = usb_red_set;
    data->led2.brightness = 0;
    data->led2.max_brightness = 255;
 
    data->led3.name = kasprintf(GFP_KERNEL, "%s-%s:w:gpd-blue",
                               dev_driver_string(&data->udev->dev),
                               dev_name(&data->udev->dev));
-   data->led3.brightness_set = usb_avr_led3_set;
+   data->led3.brightness_set = usb_green_set;
    data->led3.brightness = 0;
    data->led3.max_brightness = 255;
 
