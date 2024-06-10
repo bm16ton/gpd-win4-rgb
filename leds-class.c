@@ -107,13 +107,14 @@ static void presend(struct my_usb *data) {
         data->dir = 1;
 		schedule_work(&data->work);
 		msleep(100);
-
+/*
 		if ((j == 0) || (j == 1) || (j == 2) || (j == 3) || (j == 4) || (j == 5) || (j == 6) || (j == 7)) {
 
 			data->dir = 0;
 			schedule_work(&data->work);
 //			msleep(100);
 		}
+*/
 	}
 }
 
