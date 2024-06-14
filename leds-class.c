@@ -106,7 +106,7 @@ static void presend(struct my_usb *data) {
     	} 
         data->dir = 1;
 		schedule_work(&data->work);
-		msleep(100);
+		msleep(10);
 /*
 		if ((j == 0) || (j == 1) || (j == 2) || (j == 3) || (j == 4) || (j == 5) || (j == 6) || (j == 7)) {
 
@@ -225,7 +225,7 @@ my_usb_probe(struct usb_interface *interface,
 			data->int_in_endpoint->bmAttributes = endpoint->bmAttributes;
 		}
      }
-
+	// not currently being used, firmware updates maybe?
 	data->int_in_urb = usb_alloc_urb (0, GFP_KERNEL);
 	data->int_in_buf = kmalloc (0x0021, GFP_KERNEL);
 		usb_fill_int_urb (data->int_in_urb, data->udev,
